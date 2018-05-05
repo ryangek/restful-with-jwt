@@ -1,13 +1,7 @@
-var express = require('express')
-var router = express.Router()
-var bodyParser = require('body-parser')
 var bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken')
-var VerifyToken = require('../../auth/VerifyToken')
-
-router.use(bodyParser.urlencoded({ extended: true }))
-router.use(bodyParser.json())
-var User = require('./User')
+var { router, VerifyToken } = require('../usage/')
+var User = require('./User') // Model
 
 // CREATES A NEW USER
 router.post('/', VerifyToken, (req, res) => {

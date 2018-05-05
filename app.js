@@ -7,7 +7,7 @@ var api = `/api/${version}`
 var UserController = require('./api/user/UserController')
 app.use(`${api}/users`, UserController)
 
-var AuthController = require('./auth/AuthController')
+var AuthController = require('./api/auth/AuthController')
 app.use(`${api}/auth`, AuthController)
 
 module.exports = app

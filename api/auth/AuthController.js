@@ -1,14 +1,7 @@
-var express = require('express')
-var router = express.Router()
-var bodyParser = require('body-parser')
-var User = require('../api/user/User')
+var User = require('../user/User')
 var jwt = require('jsonwebtoken')
 var bcrypt = require('bcryptjs')
-var config = require('../config')
-var VerifyToken = require('./VerifyToken')
-
-router.use(bodyParser.urlencoded({ extended: false }))
-router.use(bodyParser.json())
+var { router, config, VerifyToken } = require('../usage')
 
 router.post('/register', function(req, res) {
   var hashedPassword = bcrypt.hashSync(req.body.password, 8)
@@ -67,8 +60,10 @@ router.get('/me', VerifyToken, (req, res, next) => {
     req.userId,
     { password: 0 },
     (err, user) => {
-      if (err)
+      if (err){
+        throw err
         return res.status(500).send("There was a problem finding the user.")
+      }
       if (!user)
         return res.status(404).send("No user found.")
       res.status(200).send(user)
